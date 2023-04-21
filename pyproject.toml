@@ -15,7 +15,7 @@ matplotlib = "*"
 python = "^3.8"
 
 [tool.poetry.scripts]
-udesign = "kmdouglass.udesigner.dpm:main"
+udesign = "kmdouglass.udesigner.scripts.udesign:main"
 
 [build-system]
 requires = ["poetry-core"]

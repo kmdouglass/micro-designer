@@ -13,8 +13,10 @@ life sciences," Advances in Optics and Photonics 6, 57-119, (2014). https://doi.
 import base64
 from enum import Enum
 import io
-from typing import Any, Optional, TypedDict
+from pathlib import Path
+from typing import Optional, TypedDict
 
+from jinja2 import Environment, PackageLoader
 import matplotlib.pyplot as plt
 
 
@@ -418,7 +420,7 @@ def coupling_ratio(inputs: Inputs) -> Result:
     }
 
 
-def compute_results(inputs: Inputs) -> dict[str, Any]:
+def compute_results(inputs: Inputs) -> dict[str, Result]:
     """Performs all design computations."""
 
     return {
@@ -544,9 +546,7 @@ def plot_fourier_plane(inputs: Inputs, results: dict[str, Result]) -> str:
     return img_base64
 
 
-def main():
-    from jinja2 import Environment, PackageLoader
-
+def main(output_file: Path):
     environment = Environment(loader=PackageLoader("kmdouglass.udesigner", "templates"))
     template = environment.get_template("dpm_design.html")
 
@@ -556,9 +556,5 @@ def main():
 
     content = template.render(inputs=DEFAULTS, results=results, violations=violations, plots=plots)
 
-    with open("output.html", mode="w", encoding="utf-8") as file:
+    with output_file.open(mode="w", encoding="utf-8") as file:
         file.write(content)
-
-
-if __name__ == "__main__":
-    main()
