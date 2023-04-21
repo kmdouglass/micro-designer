@@ -1,3 +1,15 @@
+"""Design equations for a diffraction phase microscope.
+
+This module contains the equations used to design a diffraction phase microscope. The equations are
+based on [1] with a few additions.
+
+References
+----------
+[1] Bhaduri, et al., "Diffraction phase microscopy: principles and applications in materials and
+life sciences," Advances in Optics and Photonics 6, 57-119, (2014). https://doi.org/10.1364/AOP.6.000057
+
+"""
+
 import base64
 from enum import Enum
 import io
@@ -42,13 +54,6 @@ Inputs = TypedDict(
 )
 
 
-class Result(TypedDict):
-    value: float
-    units: Optional[Units]
-    name: str
-    equation: str
-
-
 DEFAULTS = {
     "objective.magnification": 20,
     "objective.numerical_aperture": 0.4,
@@ -72,6 +77,13 @@ DEFAULTS = {
     "pinhole.diameter.units": Units.um,
     "misc.central_lobe_size_factor": 4,
 }
+
+
+class Result(TypedDict):
+    value: float
+    units: Optional[Units]
+    name: str
+    equation: str
 
 
 def resolution(inputs: Inputs) -> Result:
