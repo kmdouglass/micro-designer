@@ -13,13 +13,15 @@ life sciences," Advances in Optics and Photonics 6, 57-119, (2014). https://doi.
 import base64
 from enum import Enum
 import io
+import json
 from pathlib import Path
-from typing import Optional, TypedDict
+from typing import Any, Optional, TypedDict
 
 from jinja2 import Environment, PackageLoader
 import matplotlib.pyplot as plt
 
-
+# q: How do I make a Python Enum JSON serializable?
+# a: https://stackoverflow.com/a/49083308/102441
 class Units(Enum):
     mm = 1e-3
     um = 1e-6
@@ -79,6 +81,15 @@ DEFAULTS = {
     "pinhole.diameter.units": Units.um,
     "misc.central_lobe_size_factor": 4,
 }
+
+
+def parse_inputs(data: dict[str, Any]) -> Inputs:
+    """Converts the units of the input data from strings to Units instances."""
+    data = data.copy()
+    for key, value in data.items():
+        if key.endswith(".units"):
+            data[key] = Units[value]
+    return data
 
 
 class Result(TypedDict):
@@ -546,15 +557,26 @@ def plot_fourier_plane(inputs: Inputs, results: dict[str, Result]) -> str:
     return img_base64
 
 
-def main(output_file: Path):
+def defaults_to_json(output_file: Path):
+    """Writes the default inputs to a JSON file."""
+
+    with output_file.open(mode="w", encoding="utf-8") as file:
+        json.dump(DEFAULTS, file, indent=4, default=str)
+
+
+def main(input_file: Path, output_file: Path):
     environment = Environment(loader=PackageLoader("kmdouglass.udesigner", "templates"))
     template = environment.get_template("dpm_design.html")
 
-    results = compute_results(DEFAULTS)
-    violations = validate_results(DEFAULTS, results)
-    plots = {"lens_1_fourier_plane": plot_fourier_plane(DEFAULTS, results)}
+    with input_file.open(mode="r", encoding="utf-8") as file:
+        unparsed_inputs = json.load(file)
+        inputs = parse_inputs(unparsed_inputs)
 
-    content = template.render(inputs=DEFAULTS, results=results, violations=violations, plots=plots)
+    results = compute_results(inputs)
+    violations = validate_results(inputs, results)
+    plots = {"lens_1_fourier_plane": plot_fourier_plane(inputs, results)}
+
+    content = template.render(inputs=inputs, results=results, violations=violations, plots=plots)
 
     with output_file.open(mode="w", encoding="utf-8") as file:
         file.write(content)
