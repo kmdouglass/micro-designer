@@ -545,10 +545,10 @@ def plot_fourier_plane(inputs: Inputs, results: dict[str, Result]) -> str:
 
 
 def main():
-    from jinja2 import Environment, FileSystemLoader
+    from jinja2 import Environment, PackageLoader
 
-    environment = Environment(loader=FileSystemLoader("templates/"))
-    template = environment.get_template("design.html")
+    environment = Environment(loader=PackageLoader("kmdouglass.udesigner", "templates"))
+    template = environment.get_template("dpm_design.html")
 
     results = compute_results(DEFAULTS)
     violations = validate_results(DEFAULTS, results)
