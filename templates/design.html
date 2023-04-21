@@ -1,0 +1,170 @@
+{# templates/design.html #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Design of a Diffraction Phase Microscope</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <h1>Diffraction Phase Microscope - Design Document</h1>
+
+    <h2>Inputs</h2>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>Objective</td>
+            <td>Magnification</td>
+            <td>{{ inputs["objective.magnification"] }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Objective</td>
+            <td>Numerical Aperture</td>
+            <td>{{ inputs["objective.numerical_aperture"] }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Camera</td>
+            <td>Pixel size</td>
+            <td>{{ inputs["camera.pixel_size"] }}</td>
+            <td>{{ inputs["camera.pixel_size.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Camera</td>
+            <td>Number of pixels (horizontal)</td>
+            <td>{{ inputs["camera.horizontal_number_of_pixels"] }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Camera</td>
+            <td>Number of pixels (vertical)</td>
+            <td>{{ inputs["camera.vertical_number_of_pixels"] }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Light source</td>
+            <td>Wavelength</td>
+            <td>{{ inputs["light_source.wavelength"] }}</td>
+            <td>{{ inputs["light_source.wavelength.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Grating</td>
+            <td>Period</td>
+            <td>{{ inputs["grating.period"] }}</td>
+            <td>{{ inputs["grating.period.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Fourier lens 1</td>
+            <td>Focal length</td>
+            <td>{{ inputs["lens_1.focal_length"] }}</td>
+            <td>{{ inputs["lens_1.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Fourier lens 1</td>
+            <td>Clear aperture</td>
+            <td>{{ inputs["lens_1.clear_aperture"] }}</td>
+            <td>{{ inputs["lens_1.clear_aperture.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Fourier lens 2</td>
+            <td>Focal length</td>
+            <td>{{ inputs["lens_2.focal_length"] }}</td>
+            <td>{{ inputs["lens_2.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Fourier lens 2</td>
+            <td>Clear aperture</td>
+            <td>{{ inputs["lens_2.clear_aperture"] }}</td>
+            <td>{{ inputs["lens_2.clear_aperture.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Pinhole</td>
+            <td>Diameter</td>
+            <td>{{ inputs["pinhole.diameter"] }}</td>
+            <td>{{ inputs["pinhole.diameter.units"] }}</td>
+        </tr>
+    </table>
+
+    <h2>Calculated Properties</h2>
+    <table>
+        <tr>
+            <th>Equation</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        {% for result in results.values() %}
+        <tr>
+            <td>{{ result.equation }}</td>
+            <td>{{ result.name }}</td>
+            <td>{{ result.value }}</td>
+            <td>{{ result.units }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Design Violations</h2>
+    <ul>
+        {% for violation in violations %}
+        <li>{{violation}}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Fourier Plane Profile</h2>
+    <p>The following plot shows the sizes of the features in the Fourier plane of the diffraction phase microscope, i.e. the image in the back focal plane of lens 1.</p>
+
+    <table>
+        <tr>
+            <th>Equation</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>{{ results.fourier_plane_spacing.equation }}</td>
+            <td>{{ results.fourier_plane_spacing.name }}</td>
+            <td>{{ results.fourier_plane_spacing.value }}</td>
+            <td>{{ results.fourier_plane_spacing.units }}</td>
+        </tr>
+        <tr>
+            <td>{{ results.fourier_plane_sizes.equation }}</td>
+            <td>{{ results.fourier_plane_sizes.name }}</td>
+            <td>{{ results.fourier_plane_sizes.value }}</td>
+            <td>{{ results.fourier_plane_sizes.units }}</td>
+        </tr>
+    </table>
+
+    <img src="data:image/png;base64,{{ plots.lens_1_fourier_plane | safe }}">
+
+    <h2>Sampling Requirements</h2>
+    <p>The following table provides results on the minimum resolution and maximum pixel size given the grating period, objective magnification, and 4f magnification.</p>
+    <table>
+        <tr>
+            <th>Equation</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>{{ results.minimum_resolution.equation }}</td>
+            <td>{{ results.minimum_resolution.name }}</td>
+            <td>{{ results.minimum_resolution.value }}</td>
+            <td>{{ results.minimum_resolution.units }}</td>
+        </tr>
+        <tr>
+            <td>{{ results.maximum_pixel_size.equation }}</td>
+            <td>{{ results.maximum_pixel_size.name }}</td>
+            <td>{{ results.maximum_pixel_size.value }}</td>
+            <td>{{ results.maximum_pixel_size.units }}</td>
+        </tr>
+    </table>
+
+</body>
+</html>
