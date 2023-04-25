@@ -20,8 +20,7 @@ from typing import Any, Optional, TypedDict
 from jinja2 import Environment, PackageLoader
 import matplotlib.pyplot as plt
 
-# q: How do I make a Python Enum JSON serializable?
-# a: https://stackoverflow.com/a/49083308/102441
+
 class Units(Enum):
     mm = 1e-3
     um = 1e-6
