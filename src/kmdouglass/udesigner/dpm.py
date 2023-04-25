@@ -24,6 +24,7 @@ import matplotlib.pyplot as plt
 class Units(Enum):
     mm = 1e-3
     um = 1e-6
+    nm = 1e-9
 
     def __str__(self) -> str:
         return self.name
