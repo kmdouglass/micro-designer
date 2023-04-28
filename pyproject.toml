@@ -5,6 +5,7 @@ description = "Design tools for microscopes"
 authors = ["Kyle M. Douglass <kyle.m.douglass@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/kmdouglass/micro-designer"
 packages = [
     { include = "kmdouglass", from = "src" }
 ]
