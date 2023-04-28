@@ -7,7 +7,7 @@ Design tools for microscopes
 ### Installation
 
 ```console
-pip install git+https://github.com/kmdouglass/micro-designer
+pip install kmdouglass-udesigner
 ```
 
 ### Usage

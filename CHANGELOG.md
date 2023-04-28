@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Update version and release date in CHANGELOG.md
+
+## [0.0.0] - 2023-04-28
+
 ### Added
 
 - CHANGLOG.md file to track project changes.
 - Command line tool `udesign` which creates inputs and design documents for diffraction phase microscopes.
+
+[Unreleased]: https://github.com/kmdouglass/micro-designer/compare/v0.0.0...HEAD
+[0.0.0]: https://github.com/kmdouglass/micro-designer/releases/tag/v0.0.0
