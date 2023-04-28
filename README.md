@@ -24,3 +24,7 @@ udesign inputs -o inputs.json
 # Create an HTML design document for the microscope
 udesign doc -i inputs.json -o output.html
 ```
+
+## Supported Types of Microscopes
+
+- [Diffraction Phase](https://doi.org/10.1364/OL.31.000775)
