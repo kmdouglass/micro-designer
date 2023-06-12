@@ -508,6 +508,17 @@ def validate_pixel_size(inputs: Inputs, results: dict[str, Result]) -> Optional[
         return f"Pixel size exceeds the maximum requirement: Maximum {max_px} {units}, Actual: {px} {units}"
 
 
+def validate_grating_period(inputs: Inputs, results: dict[str, Result]) -> Optional[str]:
+    """Validates the grating period is less than the maximum requirement."""
+
+    units = Units.um
+    gp = inputs["grating.period"] * inputs["grating.period.units"].value / units.value
+    max_gp = results["maximum_grating_period"]["value"] * results["maximum_grating_period"]["units"].value / units.value
+
+    if gp > max_gp:
+        return f"Grating period exceeds the maximum requirement: Maximum {max_gp} {units}, Actual: {gp} {units}"
+
+
 def validate_results(inputs: Inputs, results: dict[str, Result]) -> list[str]:
     """Validates whether the design criteria are satisfied."""
 
@@ -517,6 +528,7 @@ def validate_results(inputs: Inputs, results: dict[str, Result]) -> list[str]:
         validate_lens_2_na,
         validate_pinhole_diameter,
         validate_pixel_size,
+        validate_grating_period,
     ]
 
     violations = []
