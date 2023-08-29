@@ -11,6 +11,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
+aenum = "*"
 Jinja2 = "*"
 matplotlib = "*"
 python = "^3.8"
