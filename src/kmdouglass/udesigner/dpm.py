@@ -11,7 +11,6 @@ life sciences," Advances in Optics and Photonics 6, 57-119, (2014). https://doi.
 """
 
 import base64
-from enum import Enum
 import io
 import json
 from pathlib import Path
@@ -20,14 +19,7 @@ from typing import Any, Optional, TypedDict
 from jinja2 import Environment, PackageLoader
 import matplotlib.pyplot as plt
 
-
-class Units(Enum):
-    mm = 1e-3
-    um = 1e-6
-    nm = 1e-9
-
-    def __str__(self) -> str:
-        return self.name
+from kmdouglass.udesigner import Result, Units
 
 
 Inputs = TypedDict(
@@ -90,13 +82,6 @@ def parse_inputs(data: dict[str, Any]) -> Inputs:
         if key.endswith(".units"):
             data[key] = Units[value]
     return data
-
-
-class Result(TypedDict):
-    value: float
-    units: Optional[Units]
-    name: str
-    equation: str
 
 
 def resolution(inputs: Inputs) -> Result:

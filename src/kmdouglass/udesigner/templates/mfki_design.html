@@ -1,0 +1,115 @@
+{# templates/design.html #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Design of a Multifocal Koehler Integrator</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <h1>Multifocal Koehler Integrator - Design Document</h1>
+
+    <h2>Inputs</h2>
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        <tr>
+            <td>Integrator microlens array</td>
+            <td>Focal length</td>
+            <td>{{ inputs["mla.focal_length"] }}</td>
+            <td>{{ inputs["mla.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Integrator microlens array</td>
+            <td>Pitch</td>
+            <td>{{ inputs["mla.pitch"] }}</td>
+            <td>{{ inputs["mla.pitch.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Excitation microlens array</td>
+            <td>Focal length</td>
+            <td>{{ inputs["mla_ex.focal_length"] }}</td>
+            <td>{{ inputs["mla_ex.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Excitation microlens array</td>
+            <td>Pitch</td>
+            <td>{{ inputs["mla_ex.pitch"] }}</td>
+            <td>{{ inputs["mla_ex.pitch.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Fourier lens</td>
+            <td>Focal length</td>
+            <td>{{ inputs["fourier_lens.focal_length"] }}</td>
+            <td>{{ inputs["fourier_lens.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Collimating lens</td>
+            <td>Focal length</td>
+            <td>{{ inputs["collimating_lens.focal_length"] }}</td>
+            <td>{{ inputs["collimating_lens.focal_length.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Telescope</td>
+            <td>Magnification</td>
+            <td>{{ inputs["telescope.magnification"] }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Source</td>
+            <td>Radius</td>
+            <td>{{ inputs["source.radius"] }}</td>
+            <td>{{ inputs["source.radius.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Source</td>
+            <td>Divergence</td>
+            <td>{{ inputs["source.divergence"] }}</td>
+            <td>{{ inputs["source.divergence.units"] }}</td>
+        </tr>
+        <tr>
+            <td>Source</td>
+            <td>Wavelength</td>
+            <td>{{ inputs["source.wavelength"] }}</td>
+            <td>{{ inputs["source.wavelength.units"] }}</td>
+        </tr>
+        <tr>
+            <td>System</td>
+            <td>Magnification</td>
+            <td>{{ inputs["system.magnification"] }}</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <h2>Calculated Properties</h2>
+    <table>
+        <tr>
+            <th>Equation</th>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Units</th>
+        </tr>
+        {% for result in results.values() %}
+        <tr>
+            <td>{{ result.equation }}</td>
+            <td>{{ result.name }}</td>
+            <td>{{ result.value }}</td>
+            <td>{{ result.units }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Design Violations</h2>
+    <ul>
+        {% for violation in violations %}
+        <li>{{violation}}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
