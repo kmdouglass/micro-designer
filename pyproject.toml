@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kmdouglass.udesigner"
-version = "0.0.0"
+version = "0.1.0"
 description = "Design tools for microscopes"
 authors = ["Kyle M. Douglass <kyle.m.douglass@gmail.com>"]
 license = "MIT"
