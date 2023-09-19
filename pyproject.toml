@@ -14,7 +14,11 @@ packages = [
 aenum = "*"
 Jinja2 = "*"
 matplotlib = "*"
-python = "^3.8"
+python = ">=3.11,<3.13"
+scipy = ">1.11.0"
+
+[tool.poetry.dev-dependencies]
+jupyter = "*"
 
 [tool.poetry.scripts]
 udesign = "kmdouglass.udesigner.scripts.udesign:main"
